@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+
+    <!-- ORM part -->
+
+    <context:property-placeholder location="/WEB-INF/application.properties"/>
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="ru.alx.trackview.model"/>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MariaDBDialect</prop>
+                <prop key="show_sql">true</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="userDao" class="ru.alx.trackview.dao.UserDAOImpl">
+        <constructor-arg name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="userService" class="ru.alx.trackview.service.UserServiceImpl">
+        <constructor-arg name="userDAO" ref="userDao"/>
+    </bean>
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.mariadb.jdbc.Driver"/>
+        <property name="url" value="jdbc:mariadb://localhost:3306/trackviewdb"/>
+<!--        <property name="schema" value="${jdbc.schema}"/>-->
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="persistenceExceptionTranslationPostProcessor"
+          class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+
+    <!-- WEB part -->
+
+    <!-- Activates various annotations to be detected in bean classes -->
+    <context:annotation-config/>
+
+    <!-- Scans the classpath for annotated components that will be auto-registered as Spring beans.
+     For example @Controller and @Service. Make sure to set the correct base-package-->
+    <context:component-scan base-package="ru.alx.trackview"/>
+
+    <!-- Configures the annotation-driven Spring MVC Controller programming model.
+    Note that, with Spring 3.0, this tag works in Servlet MVC only!  -->
+    <mvc:annotation-driven/>
+
+
+
+
+
+    <!--<mvc:view-controller path="/" view-name="users_page"/>-->
+    <!--<mvc:view-controller path="/test/" view-name="test"/>-->
+
+    <bean id="resolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+<!--    <mvc:resources mapping="/pages/**" location="/pages/" />-->
+
+</beans>

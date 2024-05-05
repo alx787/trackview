@@ -1,0 +1,3 @@
+
+
+https://github.com/starichkov/spring-hibernate-example/blob/main/src/main/webapp/WEB-INF/application.xml

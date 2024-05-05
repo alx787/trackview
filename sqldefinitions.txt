@@ -1,0 +1,3 @@
+CREATE DATABASE trackviewdb CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+GRANT ALL PRIVILEGES ON trackviewdb.* TO 'trackuser'@'localhost' IDENTIFIED BY 'trackpass';
