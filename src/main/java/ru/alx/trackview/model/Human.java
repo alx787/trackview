@@ -25,7 +25,7 @@ public class Human {
     private String name;
 
     @Column(nullable = false)
-    private String descripption;
+    private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -35,9 +35,9 @@ public class Human {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "human")
     private List<Track> trackList;
 
-    public Human(String name, String descripption, User user) {
+    public Human(String name, String description, User user) {
         this.name = name;
-        this.descripption = descripption;
+        this.description = description;
         this.user = user;
     }
 }

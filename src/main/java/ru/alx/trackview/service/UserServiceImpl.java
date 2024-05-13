@@ -7,15 +7,14 @@ import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
-    private final ru.alx.trackview.dao.UserDAO userDAO;
+    private final UserDAO userDAO;
 
     public UserServiceImpl(UserDAO userDAO) {
         this.userDAO = userDAO;
     }
 
-
     public User getUserById(int id) {
-        return userDAO.get(id);
+        return userDAO.findById(id);
     }
 
     @Override
@@ -34,7 +33,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> listUsers() {
+    public List<User> getAllUsers() {
         return userDAO.getAll();
     }
 }

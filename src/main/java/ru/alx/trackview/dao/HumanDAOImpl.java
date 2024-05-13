@@ -1,33 +1,34 @@
 package ru.alx.trackview.dao;
 
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+import ru.alx.trackview.model.Human;
 import ru.alx.trackview.model.User;
 
 import java.util.List;
 
-public class UserDAOImpl implements UserDAO {
+public class HumanDAOImpl implements HumanDAO {
 
     private final SessionFactory sessionFactory;
 
-    public UserDAOImpl(SessionFactory sessionFactory) {
+    public HumanDAOImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
-    public User findById(int id) {
-        User user;
+    public Human findById(int id) {
+        Human human;
         Session session = sessionFactory.openSession();
-        user = session.find(User.class, id);
+        human = session.find(Human.class, id);
         session.close();
-        return user;
+        return human;
     }
 
-    public void create(User user) {
+    public void create(Human human) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        session.persist(user);
+        session.persist(human);
         transaction.commit();
         session.close();
     }
@@ -40,18 +41,20 @@ public class UserDAOImpl implements UserDAO {
         session.close();
     }
 
-    public void update(User user) {
+    public void update(Human human) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        session.merge(user);
+        session.merge(human);
         transaction.commit();
         session.close();
     }
 
-    public List<User> getAll() {
+    public List<Human> findByUserId(int userid) {
         Session session = sessionFactory.openSession();
-        List<User> userList = session.createQuery("from User", User.class).list();
+        Query query = session.createQuery("FROM Human T WHERE T.id = :paramid");
+        query.setParameter("paramid", userid);
+        List<Human> humans = query.list();
         session.close();
-        return userList;
+        return  humans;
     }
 }

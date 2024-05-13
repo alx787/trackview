@@ -49,7 +49,7 @@ public class UserController {
             return null;
         }
 
-        return userDAO.get(targetId);
+        return userDAO.findById(targetId);
     }
 
     @PostMapping("/adduser")
