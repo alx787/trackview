@@ -5,7 +5,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import ru.alx.trackview.model.Human;
-import ru.alx.trackview.model.User;
 
 import java.util.List;
 

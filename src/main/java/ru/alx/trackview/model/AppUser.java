@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @Table(name = "users", schema = "trackviewdb")
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
-public class User {
+public class AppUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
@@ -36,14 +36,14 @@ public class User {
 
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "appUser")
     private List<Human> humans;
 
     // чтобы получить конструктор избранных полей через ломбок
     // нужно ставить аннотацию класса @RequiredArgsConstructor
     // и нужно помечать поля @NonNull
     // напишу конструктор так
-    public User(String username, String password, String role) {
+    public AppUser(String username, String password, String role) {
         this.username = username;
         this.password = password;
         this.role = role;
@@ -51,7 +51,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "AppUser{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +

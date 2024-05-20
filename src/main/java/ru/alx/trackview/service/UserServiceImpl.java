@@ -1,39 +1,39 @@
 package ru.alx.trackview.service;
 
-import ru.alx.trackview.dao.UserDAO;
-import ru.alx.trackview.model.User;
+import ru.alx.trackview.dao.AppUserDAO;
+import ru.alx.trackview.model.AppUser;
 
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
-    private final UserDAO userDAO;
+    private final AppUserDAO appUserDAO;
 
-    public UserServiceImpl(UserDAO userDAO) {
-        this.userDAO = userDAO;
+    public UserServiceImpl(AppUserDAO userDAO) {
+        this.appUserDAO = userDAO;
     }
 
-    public User getUserById(int id) {
-        return userDAO.findById(id);
+    public AppUser getUserById(int id) {
+        return appUserDAO.findById(id);
     }
 
     @Override
-    public void addUser(User user) {
-        userDAO.create(user);
+    public void addUser(AppUser user) {
+        appUserDAO.create(user);
     }
 
     @Override
     public void removeUser(int id) {
-        userDAO.remove(id);
+        appUserDAO.remove(id);
     }
 
     @Override
-    public void updateUser(User user) {
-        userDAO.update(user);
+    public void updateUser(AppUser user) {
+        appUserDAO.update(user);
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return userDAO.getAll();
+    public List<AppUser> getAllUsers() {
+        return appUserDAO.getAll();
     }
 }

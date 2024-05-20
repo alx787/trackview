@@ -4,30 +4,34 @@ package ru.alx.trackview.dao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import ru.alx.trackview.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import ru.alx.trackview.model.AppUser;
 
 import java.util.List;
 
-public class UserDAOImpl implements UserDAO {
+@Repository
+public class AppUserDAOImpl implements AppUserDAO {
 
+    @Autowired
     private final SessionFactory sessionFactory;
 
-    public UserDAOImpl(SessionFactory sessionFactory) {
+    public AppUserDAOImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
-    public User findById(int id) {
-        User user;
+    public AppUser findById(int id) {
+        AppUser appUser;
         Session session = sessionFactory.openSession();
-        user = session.find(User.class, id);
+        appUser = session.find(AppUser.class, id);
         session.close();
-        return user;
+        return appUser;
     }
 
-    public void create(User user) {
+    public void create(AppUser appUser) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        session.persist(user);
+        session.persist(appUser);
         transaction.commit();
         session.close();
     }
@@ -40,17 +44,17 @@ public class UserDAOImpl implements UserDAO {
         session.close();
     }
 
-    public void update(User user) {
+    public void update(AppUser appUser) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        session.merge(user);
+        session.merge(appUser);
         transaction.commit();
         session.close();
     }
 
-    public List<User> getAll() {
+    public List<AppUser> getAll() {
         Session session = sessionFactory.openSession();
-        List<User> userList = session.createQuery("from User", User.class).list();
+        List<AppUser> userList = session.createQuery("from AppUser", AppUser.class).list();
         session.close();
         return userList;
     }

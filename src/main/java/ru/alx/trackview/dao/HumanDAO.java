@@ -1,7 +1,6 @@
 package ru.alx.trackview.dao;
 
 import ru.alx.trackview.model.Human;
-import ru.alx.trackview.model.User;
 
 import java.util.List;
 

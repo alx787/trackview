@@ -5,8 +5,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import ru.alx.trackview.dao.UserDAO;
-import ru.alx.trackview.model.User;
+import ru.alx.trackview.dao.AppUserDAO;
+import ru.alx.trackview.model.AppUser;
 
 import java.util.List;
 
@@ -17,19 +17,19 @@ public class UserController {
     private static final Logger logger = LogManager.getLogger(UserController.class);
 
     @Autowired
-    private final UserDAO userDAO;
+    private final AppUserDAO userDAO;
 
-    public UserController(UserDAO userDAO) {
+    public UserController(AppUserDAO userDAO) {
         this.userDAO = userDAO;
     }
 
     @GetMapping("/getallusers")
-    public @ResponseBody List<User> getAllUsers() {
+    public @ResponseBody List<AppUser> getAllUsers() {
         return userDAO.getAll();
     }
 
     @GetMapping("/getuser/{id}")
-    public @ResponseBody User getUserById(@PathVariable("id") String id) {
+    public @ResponseBody AppUser getUserById(@PathVariable("id") String id) {
         int targetId = 0;
 
         if (id == null) {
@@ -53,7 +53,7 @@ public class UserController {
     }
 
     @PostMapping("/adduser")
-    public @ResponseBody User addUserById(@RequestBody User user) {
+    public @ResponseBody AppUser addUserById(@RequestBody AppUser user) {
         user.setRole("user");
 //        logger.warn(user.toString());
         userDAO.create(user);
