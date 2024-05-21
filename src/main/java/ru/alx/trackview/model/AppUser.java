@@ -36,7 +36,7 @@ public class AppUser {
 
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "appUser")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "appuser")
     private List<Human> humans;
 
     // чтобы получить конструктор избранных полей через ломбок

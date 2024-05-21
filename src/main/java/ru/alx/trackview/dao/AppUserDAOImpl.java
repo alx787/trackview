@@ -4,6 +4,7 @@ package ru.alx.trackview.dao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.alx.trackview.model.AppUser;
@@ -21,17 +22,30 @@ public class AppUserDAOImpl implements AppUserDAO {
     }
 
     public AppUser findById(int id) {
-        AppUser appUser;
+        AppUser appuser;
         Session session = sessionFactory.openSession();
-        appUser = session.find(AppUser.class, id);
+        appuser = session.find(AppUser.class, id);
         session.close();
-        return appUser;
+        return appuser;
     }
 
-    public void create(AppUser appUser) {
+    @Override
+    public AppUser findByName(String username) {
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("FROM AppUser A WHERE A.username = :paramusername");
+        query.setParameter("paramusername", username);
+        List<AppUser> appUserList = query.list();
+        if (appUserList.size() != 1) {
+            return null;
+        }
+
+        return appUserList.get(0);
+    }
+
+    public void create(AppUser appuser) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        session.persist(appUser);
+        session.persist(appuser);
         transaction.commit();
         session.close();
     }
@@ -44,10 +58,10 @@ public class AppUserDAOImpl implements AppUserDAO {
         session.close();
     }
 
-    public void update(AppUser appUser) {
+    public void update(AppUser appuser) {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        session.merge(appUser);
+        session.merge(appuser);
         transaction.commit();
         session.close();
     }

@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface UserService {
     AppUser getUserById(int id);
-    void addUser(AppUser appUser);
+    void addUser(AppUser appuser);
     void removeUser(int id);
-    void updateUser(AppUser appUser);
+    void updateUser(AppUser appuser);
     List<AppUser> getAllUsers();
 
 

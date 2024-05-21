@@ -9,8 +9,8 @@ public class UserServiceImpl implements UserService {
 
     private final AppUserDAO appUserDAO;
 
-    public UserServiceImpl(AppUserDAO userDAO) {
-        this.appUserDAO = userDAO;
+    public UserServiceImpl(AppUserDAO appUserDAO) {
+        this.appUserDAO = appUserDAO;
     }
 
     public AppUser getUserById(int id) {

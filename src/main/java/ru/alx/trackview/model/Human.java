@@ -29,15 +29,15 @@ public class Human {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private AppUser appUser;
+    private AppUser appuser;
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "human")
     private List<Track> trackList;
 
-    public Human(String name, String description, AppUser appUser) {
+    public Human(String name, String description, AppUser appuser) {
         this.name = name;
         this.description = description;
-        this.appUser = appUser;
+        this.appuser = appuser;
     }
 }
